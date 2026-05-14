@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eloy Esteban · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D1B2A;
+      --blue:   #1E6FBB;
+      --cyan:   #38BDF8;
+      --white:  #F0F6FF;
+      --muted:  #8AAFC8;
+      --card:   #132235;
+      --border: #1E3A55;
+      --accent: #F59E0B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(13,27,42,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.3rem;
+      color: var(--cyan); letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 40%, rgba(30,111,187,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(56,189,248,0.08) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.18;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.25);
+      color: var(--cyan); border-radius: 100px;
+      padding: .35rem 1rem; font-size: .8rem; font-weight: 500;
+      letter-spacing: .06em; margin-bottom: 1.8rem;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-tag span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.0; letter-spacing: -2px;
+      animation: fadeUp .7s .1s ease both;
+    }
+    h1 .name-line { display: block; }
+    h1 .highlight { color: var(--cyan); }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.15rem; color: var(--muted); line-height: 1.7;
+      max-width: 560px;
+      animation: fadeUp .7s .2s ease both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .btn-primary {
+      background: var(--cyan); color: var(--navy);
+      padding: .75rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: .95rem;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 24px rgba(56,189,248,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(56,189,248,0.5); }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--white);
+      padding: .75rem 2rem; border-radius: 8px;
+      font-weight: 500; font-size: .95rem;
+      text-decoration: none; transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .hero-chips {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      margin-top: 2.5rem;
+      animation: fadeUp .7s .4s ease both;
+    }
+    .chip {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--muted); font-size: .78rem; font-weight: 500;
+      padding: .3rem .85rem; border-radius: 100px;
+      letter-spacing: .04em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── SECTIONS ────────────────────────────────────────── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-size: .75rem; font-weight: 600; letter-spacing: .2em;
+      color: var(--cyan); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: -1px; margin-bottom: 3rem;
+    }
+    .section-title span { color: var(--cyan); }
+
+    /* ── SOBRE MÍ ────────────────────────────────────────── */
+    #sobre {
+      max-width: 1100px; margin: 0 auto;
+    }
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .sobre-text { font-size: 1.05rem; line-height: 1.85; color: var(--muted); }
+    .sobre-text p + p { margin-top: 1.2rem; }
+    .sobre-text strong { color: var(--white); font-weight: 500; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color .2s;
+    }
+    .stat-card:hover { border-color: var(--cyan); }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 2.2rem; color: var(--cyan);
+    }
+    .stat-label { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
+
+    /* ── PROYECTOS ───────────────────────────────────────── */
+    #proyectos { background: rgba(19,34,53,0.5); }
+    .projects-inner { max-width: 1100px; margin: 0 auto; }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-icon { font-size: 2rem; }
+    .project-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem; }
+    .project-desc { font-size: .92rem; color: var(--muted); line-height: 1.6; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+      padding: .25rem .7rem; border-radius: 6px;
+      background: rgba(56,189,248,0.1); color: var(--cyan);
+      border: 1px solid rgba(56,189,248,0.2);
+    }
+
+    /* ── EXPERIENCIA ─────────────────────────────────────── */
+    #experiencia { max-width: 1100px; margin: 0 auto; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 2rem; position: relative; padding-bottom: 3rem;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute;
+      left: 180px; top: 8px; bottom: 0;
+      width: 1px; background: var(--border);
+      transform: translateX(1rem);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-date {
+      text-align: right; padding-right: 2.5rem;
+      font-size: .82rem; color: var(--muted); padding-top: 4px;
+      line-height: 1.5;
+    }
+    .timeline-dot {
+      position: absolute; left: 180px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--cyan); transform: translateX(calc(1rem - 4px));
+      box-shadow: 0 0 12px rgba(56,189,248,0.6);
+    }
+    .timeline-body { padding-left: 1rem; }
+    .timeline-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1.1rem; margin-bottom: .2rem;
+    }
+    .timeline-company { color: var(--cyan); font-size: .9rem; font-weight: 500; margin-bottom: .8rem; }
+    .timeline-text { font-size: .92rem; color: var(--muted); line-height: 1.7; }
+    .timeline-bullets { margin-top: .8rem; display: flex; flex-direction: column; gap: .4rem; }
+    .timeline-bullets li {
+      list-style: none; font-size: .88rem; color: var(--muted);
+      display: flex; gap: .5rem; align-items: flex-start;
+    }
+    .timeline-bullets li::before { content: '→'; color: var(--cyan); flex-shrink: 0; }
+
+    /* ── SKILLS ──────────────────────────────────────────── */
+    #skills { background: rgba(19,34,53,0.5); }
+    .skills-inner { max-width: 1100px; margin: 0 auto; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.2rem; }
+    .skill-group {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem;
+    }
+    .skill-group-title {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1.2rem;
+    }
+    .skill-item { margin-bottom: .9rem; }
+    .skill-name { font-size: .88rem; font-weight: 500; margin-bottom: .4rem; display: flex; justify-content: space-between; }
+    .skill-pct { color: var(--muted); font-size: .8rem; }
+    .skill-bar { height: 4px; background: var(--border); border-radius: 100px; overflow: hidden; }
+    .skill-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      animation: fillBar 1.2s ease both;
+    }
+    @keyframes fillBar { from { width: 0 !important; } }
+
+    /* ── CONTACTO ────────────────────────────────────────── */
+    #contacto { max-width: 700px; margin: 0 auto; text-align: center; }
+    #contacto .section-title { margin-bottom: 1rem; }
+    .contact-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; line-height: 1.7; }
+    .contact-links { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--white); text-decoration: none;
+      padding: .8rem 1.6rem; border-radius: 10px;
+      font-size: .9rem; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: .82rem;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::before, .timeline-dot { display: none; }
+      .timeline-date { text-align: left; padding: 0 0 .5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">EE_dev</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span></span> Disponible para prácticas y proyectos</div>
+    <h1>
+      <span class="name-line">Eloy</span>
+      <span class="name-line">Esteban <span class="highlight">Selvático</span></span>
+    </h1>
+    <p class="hero-sub">
+      Técnico en Desarrollo de Aplicaciones Web. Construyo servicios web, automatizaciones con API y aplico IA en proyectos reales. Basado en Málaga 🇪🇸
+    </p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+      <a href="#contacto" class="btn-outline">Contactar</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">PHP</span>
+      <span class="chip">API REST</span>
+      <span class="chip">Dart / Flutter</span>
+      <span class="chip">HTML · CSS · JS</span>
+      <span class="chip">Prompt Engineering</span>
+      <span class="chip">Despliegue web</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section>
+  <div id="sobre">
+    <div class="section-label">Quién soy</div>
+    <h2 class="section-title">Sobre <span>mí</span></h2>
+    <div class="sobre-grid">
+      <div class="sobre-text">
+        <p>Soy estudiante de segundo año de <strong>Técnico en Desarrollo de Aplicaciones Web</strong> en el I.E.S. Mar de Alborán (Estepona). Me apasiona construir cosas que funcionen de verdad: desde APIs en PHP hasta apps móviles en Dart.</p>
+        <p>Durante mis prácticas en <strong>GrupomasPC</strong> trabajé en proyectos reales: automaticé procesos con API REST, adapté aplicaciones móviles de código abierto y desplegué aplicaciones en producción. También experimenté con <strong>ingeniería de prompts</strong> aplicada a flujos de trabajo reales.</p>
+        <p>Fuera del código, llevo más de un año trabajando en <strong>Eroski Center</strong>, donde he ejercido de supervisor y encargado, lo que me ha dado una perspectiva muy práctica del trabajo en equipo y la organización.</p>
+        <p>En 2025 me <strong>clasifiqué en el concurso regional ProgramaMe</strong>, lo que me motivó a seguir mejorando mis habilidades técnicas.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">2025</div>
+          <div class="stat-label">Clasificación ProgramaMe regional</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Meses de experiencia en prácticas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">B1</div>
+          <div class="stat-label">Inglés · Nivel intermedio</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">DAW</div>
+          <div class="stat-label">Ciclo en curso · IES Mar de Alborán</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="projects-inner">
+    <div class="section-label">Lo que he construido</div>
+    <h2 class="section-title">Proyectos <span>destacados</span></h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">⚙️</div>
+        <div class="project-title">Servicio Web de Automatizaciones</div>
+        <div class="project-desc">Desarrollo de un servicio web completo con integración de API REST en PHP para automatizar procesos internos, mejorando la eficiencia operativa del sistema.</div>
+        <div class="project-tags">
+          <span class="tag">PHP</span>
+          <span class="tag">API REST</span>
+          <span class="tag">Back-end</span>
+          <span class="tag">Automatización</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">📱</div>
+        <div class="project-title">Adaptación App Móvil en Dart</div>
+        <div class="project-desc">Adaptación y modificación de aplicaciones móviles en lenguaje Dart a partir de código abierto, aplicando cambios funcionales y de interfaz según los requisitos del proyecto.</div>
+        <div class="project-tags">
+          <span class="tag">Dart</span>
+          <span class="tag">Flutter</span>
+          <span class="tag">Open Source</span>
+          <span class="tag">Mobile</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🚀</div>
+        <div class="project-title">Despliegue en Producción</div>
+        <div class="project-desc">Gestión del ciclo completo de despliegue de aplicaciones web y móviles en entornos de producción reales, garantizando estabilidad y correcto funcionamiento.</div>
+        <div class="project-tags">
+          <span class="tag">Despliegue</span>
+          <span class="tag">Producción</span>
+          <span class="tag">DevOps</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🤖</div>
+        <div class="project-title">Ingeniería de Prompts con IA</div>
+        <div class="project-desc">Diseño y optimización de prompts para modelos de inteligencia artificial aplicados a flujos de trabajo reales, mejorando la precisión y eficiencia de los resultados generados.</div>
+        <div class="project-tags">
+          <span class="tag">IA</span>
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">LLM</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🌐</div>
+        <div class="project-title">Desarrollo Front-End</div>
+        <div class="project-desc">Maquetación y desarrollo de interfaces web con HTML, CSS y JavaScript. Trabajo con distintas bases de datos en contextos back-end y front-end.</div>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Bases de datos</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🏆</div>
+        <div class="project-title">ProgramaMe 2025</div>
+        <div class="project-desc">Clasificación en el concurso regional ProgramaMe 2025, competición de programación para estudiantes de ciclos formativos de informática de Andalucía.</div>
+        <div class="project-tags">
+          <span class="tag">Competición</span>
+          <span class="tag">Algoritmia</span>
+          <span class="tag">Regional</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section>
+  <div id="experiencia">
+    <div class="section-label">Trayectoria</div>
+    <h2 class="section-title">Experiencia <span>profesional</span></h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">Ene 2026<br>→ May 2026</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-role">Desarrollador en Prácticas</div>
+          <div class="timeline-company">GrupomasPC · Estepona, Málaga</div>
+          <div class="timeline-text">Incorporación al equipo de desarrollo en prácticas del ciclo DAW. Participación en proyectos reales de automatización, desarrollo móvil y despliegue.</div>
+          <ul class="timeline-bullets">
+            <li>Servicio web de automatizaciones con API REST en PHP</li>
+            <li>Adaptación de apps móviles en Dart (código abierto)</li>
+            <li>Despliegue de aplicaciones en entornos de producción</li>
+            <li>Ingeniería de prompts con Inteligencia Artificial</li>
+            <li>Maquetación front-end y trabajo con bases de datos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Jun 2024<br>→ Actualidad</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-role">Dependiente Polivalente · Supervisor</div>
+          <div class="timeline-company">Eroski Center · Manilva, Málaga</div>
+          <div class="timeline-text">Múltiples funciones en distintos departamentos: caja, reposición, frutería, panadería y gestión de zona de frescos. Ejercicio puntual como supervisor y encargado.</div>
+          <ul class="timeline-bullets">
+            <li>Liderazgo de equipos como supervisor y encargado</li>
+            <li>Control y gestión de stock e inventario</li>
+            <li>Atención personalizada al cliente</li>
+            <li>Gestión de existencias y reposición organizada</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Sep 2024<br>→ Jun 2026</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-role">Técnico en Desarrollo de Aplicaciones Web</div>
+          <div class="timeline-company">I.E.S. Mar de Alborán · Estepona, Málaga</div>
+          <div class="timeline-text">Ciclo formativo de grado medio en curso. Formación en desarrollo front-end y back-end, bases de datos, despliegue de aplicaciones y entornos de desarrollo profesional.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-inner">
+    <div class="section-label">Tecnologías</div>
+    <h2 class="section-title">Mis <span>habilidades</span></h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Back-end</div>
+        <div class="skill-item">
+          <div class="skill-name">PHP <span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">API REST <span class="skill-pct">78%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Bases de datos <span class="skill-pct">65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Front-end & Mobile</div>
+        <div class="skill-item">
+          <div class="skill-name">HTML / CSS <span class="skill-pct">82%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">JavaScript <span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Dart / Flutter <span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Herramientas & Otros</div>
+        <div class="skill-item">
+          <div class="skill-name">Prompt Engineering <span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Despliegue web <span class="skill-pct">68%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Git / GitHub <span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section>
+  <div id="contacto">
+    <div class="section-label">Hablemos</div>
+    <h2 class="section-title">¿Tienes un <span>proyecto</span>?</h2>
+    <p class="contact-sub">Estoy abierto a colaboraciones, prácticas y proyectos interesantes. No dudes en escribirme.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:eloymax51@gmail.com">✉️ eloymax51@gmail.com</a>
+      <a class="contact-link" href="https://linkedin.com/eloy-esteban-selvatico" target="_blank">🔗 LinkedIn</a>
+      <a class="contact-link" href="https://github.com/eloyestebann51" target="_blank">💻 GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Diseñado y construido por <strong>Eloy Esteban Selvático</strong> · Málaga, España · 2025</p>
+</footer>
+
+</body>
+</html>
